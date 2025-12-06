@@ -21,7 +21,7 @@ def check_adjacent_rolls(grid, row, col, row_count, col_count, max_allowed):
 def do_part_1(file_path="day_4_input.txt"):
     toilet_paper_roll_count = 0
     with open(file_path, "r") as file:
-        grid = grid_utils.populate_string_grid(file)
+        grid = grid_utils.populate_character_grid(file)
         row_count = len(grid)
         col_count = len(grid[0]) if row_count > 0 else 0
 
@@ -39,7 +39,7 @@ def do_part_1(file_path="day_4_input.txt"):
 def do_part_2(file_path="day_4_input.txt"):
     toilet_paper_roll_count = 0
     with open(file_path, "r") as file:
-        grid = grid_utils.populate_string_grid(file)
+        grid = grid_utils.populate_character_grid(file)
         row_count = len(grid)
         col_count = len(grid[0]) if row_count > 0 else 0
 
