@@ -47,21 +47,21 @@ def do_part_2(file_path="day_7_input.txt"):
     col_count = len(grid[0]) if row_count > 0 else 0
 
     @cache
-    def process_row(row_index, col_index, row_count, col_count):
+    def process_row(row_index, col_index):
         if row_index >= row_count - 1:
             return 1
         
         char = grid[row_index][col_index]
         if char == '.':
-            return process_row(row_index + 1, col_index, row_count, col_count)
+            return process_row(row_index + 1, col_index)
         elif char == '^':
             timelines = 0
             # Split the light
             if col_index > 0:
-                timelines += process_row(row_index + 1, col_index - 1, row_count, col_count)
+                timelines += process_row(row_index + 1, col_index - 1)
 
             if col_index < col_count - 1:
-                timelines += process_row(row_index + 1, col_index + 1, row_count, col_count)
+                timelines += process_row(row_index + 1, col_index + 1)
 
             return timelines
     
@@ -69,7 +69,7 @@ def do_part_2(file_path="day_7_input.txt"):
     for col_index in range(col_count):
         char = first_row[col_index]
         if char == 'S':
-            timelines += process_row(1, col_index, row_count, col_count)
+            timelines += process_row(1, col_index)
 
     return timelines
 
