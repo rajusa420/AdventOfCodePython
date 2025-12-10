@@ -1,4 +1,4 @@
-import grid_utils
+from utils import grid_utils
 from functools import cache
 
 def do_part_1(file_path="day_7_input.txt"):

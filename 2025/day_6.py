@@ -1,6 +1,6 @@
 
 from functools import reduce
-import grid_utils
+from utils import grid_utils
 
 def do_part_1(file_path="day_6_input.txt"):
     sum = 0

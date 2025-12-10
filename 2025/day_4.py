@@ -1,4 +1,4 @@
-import grid_utils
+from utils import grid_utils
 
 def check_adjacent_rolls(grid, row, col, row_count, col_count, max_allowed):
     adjacent_roll_count = 0

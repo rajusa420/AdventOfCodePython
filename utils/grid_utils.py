@@ -9,7 +9,7 @@ def populate_string_grid(file):
     grid = []
     for line in file:
         row = line.split(' ')
-        stripped = [str.strip for str in row if str.strip()]
+        stripped = [str.strip() for str in row if str.strip()]
         grid.append(stripped)
     return grid
 
