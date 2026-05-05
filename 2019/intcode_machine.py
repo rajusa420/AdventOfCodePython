@@ -64,7 +64,7 @@ class intcode_machine:
             case self.Opcode.INPUT:
                 param = parameters[0]
                 dest = param.instruction_param
-                input_string = input("Input: ")
+                input_string = self.getNextInput()
                 self.memory[dest] = input_string
                 if self.debugInstructionLogging:
                     print(f"INPUT: {input_string} -> {dest}")
@@ -72,7 +72,8 @@ class intcode_machine:
             case self.Opcode.PRINT:
                 param = parameters[0]
                 val1 = self.resolve_parameter(param)
-                print(f"{val1}")
+                #print(f"{val1}")
+                self.outputs.append(val1)
                 if self.debugInstructionLogging:
                     print(f"PRINT: {val1}")
 
@@ -122,14 +123,31 @@ class intcode_machine:
                 return int(self.memory[parameter.instruction_param])
             case self.ParameterMode.IMMEDIATE:
                 return parameter.instruction_param
+            
+    def getNextInput(self):
+        if self.inputs is not None:
+            return str(self.inputs.pop(0))
+        else:
+            input_string = input("Input: ")
+            return input_string
 
-    def execute_program(self, program):
+
+    def load_program(self, program):
         memory = program.split(",")
-        return self.execute(memory)
+        self.memory = memory
 
-    def execute(self, memory_input):
+    def execute_program(self, program, inputs=None):
+        memory = program.split(",")
+        return self.execute(memory, inputs)
+    
+    def resume_execution(self, inputs=None, pause_on_output=False):
+        return self.execute(memory_input=self.memory, inputs=inputs, instruction_pointer=self.instruction_pointer, pause_on_output=pause_on_output)
+
+    def execute(self, memory_input, inputs=None, instruction_pointer=0, pause_on_output=False):
         self.memory = memory_input
-        self.instruction_pointer = 0
+        self.inputs = inputs
+        self.outputs = []
+        self.instruction_pointer = instruction_pointer
 
         while self.instruction_pointer >= 0:
             instruction = self.memory[self.instruction_pointer]
@@ -146,6 +164,9 @@ class intcode_machine:
             # if handling the instruction moved the ip then we continue processing from there
             if self.instruction_pointer == original_instruction_pointer:
                 self.instruction_pointer += (parameter_count + 1)
+
+            if pause_on_output and opcode == self.Opcode.PRINT:
+                return self.outputs
         
-        return self.memory
+        return self.outputs
 

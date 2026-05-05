@@ -9,7 +9,7 @@ def do_part_1(file_path):
     print(f"Program: {program}")
 
     machine = intcode_machine()
-    result_memory = machine.execute_program(program)
+    machine.execute_program(program)
 
     return 0
 
